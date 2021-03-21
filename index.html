@@ -22,6 +22,14 @@
     `;
 
     class TodoApp extends LitElement {
+      static get properties() {
+        return {
+          todos: {
+            type: Array
+          }
+        }
+      }
+
       constructor() {
         super();
         this.todos = [
@@ -40,7 +48,7 @@
         const input = this.shadowRoot.getElementById('addTodoInput');
         const text = input.value;
         input.value = '';
-        this.todos.push({ text, finished: false });
+        this.todos = [...this.todos, { text, finished: false }];
         this.requestUpdate();
       }
 
