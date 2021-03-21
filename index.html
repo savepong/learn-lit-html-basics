@@ -36,15 +36,27 @@
         console.log('lit element connected');
       }
 
+      _addTodo() {
+        const input = this.shadowRoot.getElementById('addTodoInput');
+        const text = input.value;
+        input.value = '';
+        this.todos.push({ text, finished: false });
+        this.requestUpdate();
+      }
+
       render() {
         return html`
           ${headerTemplate}
+
+          <input type="text" id="addTodoInput" placeholder="Name" />
+          <button @click="${this._addTodo}">Add</button>
 
           <ol>
             ${this.todos.map(todo => html`
               <li>${todo.text} (${todo.finished ? 'Finished' : 'Unfinished'})</li>
             `)}
           </ol>
+
           ${footerTemplate}
         `;
       }
