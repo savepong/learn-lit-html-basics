@@ -68,6 +68,9 @@
       }
 
       render() {
+        const finishedCount = this.todos.filter(todo => todo.finished).length;
+        const unfinishedCount = this.todos.length - finishedCount;
+
         return html`
           ${headerTemplate}
 
@@ -87,6 +90,9 @@
               </li>
             `)}
           </ol>
+
+          <div>Total finished: ${finishedCount}</div>
+          <div>Total unfinished: ${unfinishedCount}</div>
 
           ${footerTemplate}
         `;
