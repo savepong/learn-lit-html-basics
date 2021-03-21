@@ -1,4 +1,4 @@
-import { LitElement, html } from "https://unpkg.com/lit-element?module";
+import { LitElement, html, css } from "https://unpkg.com/lit-element?module";
 
 class TodoList extends LitElement {
   static get properties() {
@@ -7,6 +7,26 @@ class TodoList extends LitElement {
         type: Array,
       },
     };
+  }
+
+  static get styles() {
+    return css`
+      :host {
+        color: blue;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      button {
+        background: transparent;
+        border: none;
+        color: red;
+        cursor: pointer;
+      }
+    `;
   }
 
   _changeTodoFinished(e, changedTodo) {
