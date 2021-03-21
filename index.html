@@ -11,6 +11,7 @@
 
   <script type="module">
     import { LitElement, html } from 'https://unpkg.com/lit-element?module';
+    import './todo-list.js';
 
     const author = 'savepong';
     const homepage = 'https://savepong.com';
@@ -52,12 +53,12 @@
         this.requestUpdate();
       }
 
-      _removeTodo(todo) {
-        this.todos = this.todos.filter(e => e !== todo);
+      _removeTodo(e) {
+        this.todos = this.todos.filter(todo => todo !== e.detail);
       }
 
-      _changeTodoFinished(e, changedTodo) {
-        const finished = e.target.checked;
+      _changeTodoFinished(e) {
+        const { changedTodo, finished } = e.detail;
 
         this.todos = this.todos.map((todo) => {
           if (todo !== changedTodo) {
@@ -77,19 +78,11 @@
           <input type="text" id="addTodoInput" placeholder="Name" />
           <button @click="${this._addTodo}">Add</button>
 
-          <ol>
-            ${this.todos.map(todo => html`
-              <li>
-                <input 
-                  type="checkbox"
-                  .checked=${todo.finished}
-                  @change=${e => this._changeTodoFinished(e, todo)} 
-                />
-                ${todo.text} (${todo.finished ? 'Finished' : 'Unfinished'})
-                <button @click="${() => this._removeTodo(todo)}">X</button>
-              </li>
-            `)}
-          </ol>
+          <todo-list
+            .todos=${this.todos}
+            @change-todo-finished=${this._changeTodoFinished}
+            @remove-todo=${this._removeTodo}
+          ></todo-list>
 
           <div>Total finished: ${finishedCount}</div>
           <div>Total unfinished: ${unfinishedCount}</div>
