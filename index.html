@@ -52,6 +52,10 @@
         this.requestUpdate();
       }
 
+      _removeTodo(todo) {
+        this.todos = this.todos.filter(e => e !== todo);
+      }
+
       render() {
         return html`
           ${headerTemplate}
@@ -61,7 +65,10 @@
 
           <ol>
             ${this.todos.map(todo => html`
-              <li>${todo.text} (${todo.finished ? 'Finished' : 'Unfinished'})</li>
+              <li>
+                ${todo.text} (${todo.finished ? 'Finished' : 'Unfinished'})
+                <button @click="${() => this._removeTodo(todo)}">X</button>
+              </li>
             `)}
           </ol>
 
